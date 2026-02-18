@@ -1,0 +1,104 @@
+/* WooBot Admin Dashboard Styles */
+.woobot-wrap { max-width: 960px; margin-top: 20px; }
+.woobot-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+.woobot-logo { display: flex; align-items: center; gap: 10px; font-size: 28px; font-weight: 700; color: #1d2327; margin: 0; }
+.woobot-logo-icon { font-size: 32px; }
+.woobot-subtitle { font-size: 14px; font-weight: 400; color: #646970; margin-right: 8px; }
+
+/* Admin bar */
+#wp-admin-bar-woobot-dashboard > a { background: #25D366 !important; color: #fff !important; font-weight: 600 !important; }
+#wp-admin-bar-woobot-dashboard > a:hover { background: #1fb855 !important; }
+
+.woobot-tabs { margin-bottom: 0; }
+
+/* Cards */
+.woobot-card { background: #fff; border: 1px solid #c3c4c7; border-radius: 4px; padding: 20px 24px; margin-bottom: 20px; box-shadow: 0 1px 1px rgba(0,0,0,0.04); }
+.woobot-card h2 { font-size: 18px; font-weight: 600; margin: 0 0 16px; padding-bottom: 12px; border-bottom: 1px solid #f0f0f1; color: #1d2327; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.woobot-card h3 { font-size: 15px; font-weight: 600; margin: 20px 0 10px; color: #1d2327; }
+
+/* Status */
+.woobot-status-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+.woobot-status-item { display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: #f6f7f7; border-radius: 4px; font-size: 14px; }
+.woobot-status-item.status-ok { background: #edfaef; }
+.woobot-status-item.status-error { background: #fcf0f1; }
+.woobot-status-item.status-warning { background: #fef8ee; }
+
+/* Copy Field */
+.woobot-copy-field { display: flex; gap: 6px; align-items: center; }
+.woobot-copy-field input { flex: 1; font-family: monospace; font-size: 13px; padding: 6px 10px; background: #f6f7f7; direction: ltr; text-align: left; }
+
+/* Fields */
+.woobot-field-group { margin-bottom: 16px; }
+.woobot-field-group label { display: block; font-weight: 600; font-size: 13px; margin-bottom: 6px; color: #1d2327; }
+.woobot-field-group input[type="text"], .woobot-field-group input[type="url"],
+.woobot-field-group input[type="number"], .woobot-field-group input[type="password"],
+.woobot-field-group select { width: 100%; max-width: 400px; }
+.woobot-field-group .description { color: #646970; font-size: 12px; margin-top: 4px; }
+
+/* Store name */
+.woobot-store-name { font-size: 14px; margin: 0 0 12px; }
+
+/* Credits */
+.woobot-credits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 16px; }
+.woobot-credit-box { text-align: center; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; color: #fff; }
+.woobot-credit-box .credit-number { display: block; font-size: 36px; font-weight: 700; line-height: 1.2; }
+.woobot-credit-box .credit-label { font-size: 13px; opacity: 0.9; }
+.woobot-credits-updated { color: #646970; font-size: 12px; margin-bottom: 12px; }
+.woobot-buy-credits { background: #25D366 !important; border-color: #25D366 !important; font-weight: 600; font-size: 14px !important; padding: 6px 24px !important; }
+.woobot-buy-credits:hover { background: #1fb855 !important; border-color: #1fb855 !important; }
+
+/* Stats */
+.woobot-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+.woobot-stat-box { text-align: center; padding: 16px; background: #f6f7f7; border-radius: 6px; }
+.woobot-stat-box .stat-number { display: block; font-size: 28px; font-weight: 700; color: #2271b1; }
+.woobot-stat-box .stat-value { display: block; font-size: 14px; font-weight: 600; color: #1d2327; direction: ltr; }
+.woobot-stat-box .stat-label { font-size: 12px; color: #646970; margin-top: 4px; display: block; }
+
+/* Register section */
+.woobot-register-section { margin-top: 20px; padding: 16px; background: #f0f6fc; border: 1px solid #c3c4c7; border-radius: 6px; }
+.woobot-register-section h3 { margin-top: 0; color: #2271b1; }
+
+/* Sync button */
+.woobot-sync-btn { font-size: 12px !important; }
+
+/* Logs */
+.woobot-log-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; align-items: center; }
+.woobot-log-filters select, .woobot-log-filters input[type="date"] { max-width: 180px; }
+.woobot-logs-table { font-size: 13px; }
+.woobot-logs-table .column-id { width: 50px; }
+.woobot-error-cell { color: #d63638; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Badges */
+.woobot-badge { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; text-transform: uppercase; }
+.badge-success { background: #edfaef; color: #00a32a; }
+.badge-error { background: #fcf0f1; color: #d63638; }
+.badge-action { background: #f0f6fc; color: #2271b1; }
+
+/* Pagination */
+.woobot-pagination { display: flex; gap: 4px; align-items: center; margin-top: 16px; flex-wrap: wrap; }
+.woobot-pagination .button.current { background: #2271b1; color: #fff; border-color: #2271b1; }
+.woobot-total-logs { margin-right: 12px; color: #646970; font-size: 13px; }
+
+/* Code */
+.woobot-code { background: #1d2327; color: #50c878; padding: 16px; border-radius: 6px; overflow-x: auto; font-size: 12px; line-height: 1.6; direction: ltr; text-align: left; margin-bottom: 16px; }
+.woobot-code code { color: inherit; background: none; }
+
+/* FAQ */
+.woobot-faq details { margin-bottom: 8px; border: 1px solid #dcdcde; border-radius: 4px; overflow: hidden; }
+.woobot-faq summary { padding: 10px 14px; cursor: pointer; font-weight: 600; background: #f6f7f7; font-size: 13px; }
+.woobot-faq details p { padding: 10px 14px; margin: 0; font-size: 13px; color: #50575e; }
+
+.woobot-steps li { margin-bottom: 8px; font-size: 14px; line-height: 1.6; }
+.woobot-danger-btn { color: #d63638 !important; border-color: #d63638 !important; }
+.woobot-danger-btn:hover { background: #d63638 !important; color: #fff !important; }
+.woobot-inline-status, .woobot-inline-msg { margin-right: 10px; font-size: 13px; transition: opacity 0.3s; }
+.woobot-inline-status.success, .woobot-inline-msg.success { color: #00a32a; }
+.woobot-inline-status.error, .woobot-inline-msg.error { color: #d63638; }
+.woobot-notice { padding: 10px 14px; border-radius: 4px; font-size: 13px; }
+.woobot-notice.warning { background: #fef8ee; border: 1px solid #dba617; color: #6e4e00; }
+
+@media (max-width: 782px) {
+    .woobot-header { flex-direction: column; align-items: flex-start; }
+    .woobot-copy-field { flex-wrap: wrap; }
+    .woobot-log-filters { flex-direction: column; align-items: stretch; }
+}
