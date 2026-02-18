@@ -219,7 +219,7 @@ class WooBot_Admin {
             <!-- Server URL -->
             <div class="woobot-field-group">
                 <label for="woobot-server-url"><?php esc_html_e( 'Server URL (API Base URL)', 'woobot-whatsapp-uploader' ); ?></label>
-                <input type="url" id="woobot-server-url" name="server_url" value="<?php echo esc_attr( $settings['server_url'] ); ?>" placeholder="https://your-server.replit.dev" style="max-width:600px;" />
+                <input type="url" id="woobot-server-url" name="server_url" value="<?php echo esc_attr( $settings['server_url'] ); ?>" placeholder="https://listybot.replit.app" style="max-width:600px;" />
                 <p class="description"><?php esc_html_e( 'The WooBot server URL provided by your administrator.', 'woobot-whatsapp-uploader' ); ?></p>
             </div>
 
@@ -246,11 +246,11 @@ class WooBot_Admin {
             <!-- Register New Store -->
             <?php if ( empty( $settings['api_key'] ) || empty( $settings['store_key'] ) ) : ?>
                 <div class="woobot-register-section">
-                    <h3><?php esc_html_e( 'Register New Store', 'woobot-whatsapp-uploader' ); ?></h3>
-                    <p class="description"><?php esc_html_e( 'No API Key yet? Enter your Partner ID and click Register to connect this store.', 'woobot-whatsapp-uploader' ); ?></p>
+                    <h3><?php esc_html_e( 'Register Store', 'woobot-whatsapp-uploader' ); ?></h3>
+                    <p class="description"><?php esc_html_e( 'Enter your builder key (LISTY-XX-NNN) or store owner key (WOOBOT_XXXX...) to connect.', 'woobot-whatsapp-uploader' ); ?></p>
                     <div class="woobot-field-group">
-                        <label for="woobot-register-partner-id"><?php esc_html_e( 'Partner ID', 'woobot-whatsapp-uploader' ); ?></label>
-                        <input type="text" id="woobot-register-partner-id" placeholder="WOOBOT-YK-001" value="<?php echo esc_attr( $settings['partner_id'] ); ?>" />
+                        <label for="woobot-key"><?php esc_html_e( 'WooBot Key', 'woobot-whatsapp-uploader' ); ?></label>
+                        <input type="text" id="woobot-key" placeholder="LISTY-YK-001 / WOOBOT_XXXXXXXXXXXXXXXX" value="" style="max-width:400px;" />
                     </div>
                     <button type="button" class="button button-primary" id="woobot-register-btn">
                         <?php esc_html_e( '🔗 Register Store', 'woobot-whatsapp-uploader' ); ?>
@@ -498,16 +498,18 @@ X-WooBot-Key: <?php echo esc_html( $api_key ); ?></code></pre>
         check_ajax_referer( 'woobot_admin_nonce', 'nonce' );
         if ( ! current_user_can( 'manage_woocommerce' ) ) { wp_send_json_error( 'Permission denied.' ); }
 
-        $partner_id = isset( $_POST['partner_id'] ) ? sanitize_text_field( wp_unslash( $_POST['partner_id'] ) ) : '';
+        $key = isset( $_POST['key'] ) ? sanitize_text_field( wp_unslash( $_POST['key'] ) ) : '';
 
-        if ( empty( $partner_id ) ) {
-            wp_send_json_error( __( 'Partner ID is required.', 'woobot-whatsapp-uploader' ) );
+        if ( empty( $key ) ) {
+            wp_send_json_error( __( 'WooBot Key is required.', 'woobot-whatsapp-uploader' ) );
         }
 
-        // Save partner ID
-        update_option( 'woobot_partner_id', $partner_id );
+        // Save server URL if provided
+        if ( ! empty( $_POST['server_url'] ) ) {
+            update_option( 'woobot_server_url', sanitize_url( wp_unslash( $_POST['server_url'] ) ) );
+        }
 
-        $result = WooBot_Credits::register_store( $partner_id );
+        $result = WooBot_Credits::register_store( $key );
 
         if ( is_wp_error( $result ) ) {
             wp_send_json_error( $result->get_error_message() );

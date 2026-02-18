@@ -97,7 +97,7 @@ function woobot_activate() {
         'woobot_rate_limit'          => 30,
         'woobot_log_retention'       => 30,
         'woobot_partner_id'          => '',
-        'woobot_server_url'          => 'https://d2f56b6f-802a-40b0-9cad-8300af11b39d-00-42uli78dxa6z.kirk.replit.dev',
+        'woobot_server_url'          => 'https://listybot.replit.app',
         'woobot_activated_at'        => current_time( 'mysql' ),
         'woobot_total_uploads'       => 0,
         'woobot_total_enhanced'      => 0,

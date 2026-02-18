@@ -119,8 +119,9 @@ class WooBot_Credits {
 
     /**
      * Register a new store on WooBot server.
+     * @param string $key Builder key (LISTY-XX-NNN) or owner key (WOOBOT_XXXX...).
      */
-    public static function register_store( $partner_id ) {
+    public static function register_store( $key ) {
         $server_url = get_option( 'woobot_server_url', '' );
 
         if ( empty( $server_url ) ) {
@@ -129,17 +130,32 @@ class WooBot_Credits {
 
         $webhook_secret = wp_generate_password( 32, false, false );
 
+        // Determine if key is builder format or owner format
+        $body = array(
+            'siteUrl'       => get_site_url(),
+            'siteName'      => get_bloginfo( 'name' ),
+            'webhookUrl'    => rest_url( 'woobot/v1/create-product' ),
+            'webhookSecret' => $webhook_secret,
+        );
+
+        // Builder key: LISTY-XX-NNN or WOOBOT-XX-NNN
+        if ( preg_match( '/^(LISTY|WOOBOT)-[A-Z]{1,2}-\d{3}$/', $key ) ) {
+            $body['partnerId'] = $key;
+        }
+        // Owner key: WOOBOT_XXXXXXXXXXXXXXXX
+        elseif ( preg_match( '/^WOOBOT_[A-Za-z0-9]{16}$/', $key ) ) {
+            $body['storeKey'] = $key;
+        }
+        // Fallback — send as partnerId
+        else {
+            $body['partnerId'] = $key;
+        }
+
         $response = wp_remote_post(
             rtrim( $server_url, '/' ) . '/api/plugin/register-store',
             array(
                 'headers' => array( 'Content-Type' => 'application/json' ),
-                'body'    => wp_json_encode( array(
-                    'partnerId'     => sanitize_text_field( $partner_id ),
-                    'siteUrl'       => get_site_url(),
-                    'siteName'      => get_bloginfo( 'name' ),
-                    'webhookUrl'    => rest_url( 'woobot/v1/create-product' ),
-                    'webhookSecret' => $webhook_secret,
-                ) ),
+                'body'    => wp_json_encode( $body ),
                 'timeout' => 15,
             )
         );
@@ -176,7 +192,7 @@ class WooBot_Credits {
     public static function get_purchase_url() {
         $server_url = get_option( 'woobot_server_url', '' );
         $store_key  = get_option( 'woobot_store_key', '' );
-        $base = ! empty( $server_url ) ? rtrim( $server_url, '/' ) : 'https://woobot.co.il';
-        return $base . '/credits?store=' . urlencode( $store_key );
+        $base = ! empty( $server_url ) ? rtrim( $server_url, '/' ) : 'https://listybot.replit.app';
+        return $base . '/dashboard/store/buy-credits';
     }
 }

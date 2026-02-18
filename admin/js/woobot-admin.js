@@ -86,29 +86,46 @@
         // Register store
         $('#woobot-register-btn').on('click', function() {
             var btn = $(this), status = $('#woobot-register-status');
-            var partnerId = $('#woobot-register-partner-id').val();
+            var key = $('#woobot-key').val().trim();
+            var serverUrl = $('#woobot-server-url').val().trim();
 
-            if (!partnerId) { alert('Enter a Partner ID'); return; }
+            if (!serverUrl) { alert('יש להזין Server URL'); return; }
+            if (!key) { alert('יש להזין WooBot Key'); return; }
+
+            // Validate key format
+            var isBuilderKey = /^(WOOBOT|LISTY)-[A-Z]{1,2}-\d{3}$/.test(key);
+            var isOwnerKey = /^WOOBOT_[A-Za-z0-9]{16}$/.test(key);
+            if (!isBuilderKey && !isOwnerKey) {
+                alert('פורמט מפתח לא תקין.\nבונה אתרים: LISTY-XX-NNN\nבעל חנות: WOOBOT_XXXXXXXXXXXXXXXX');
+                return;
+            }
 
             btn.prop('disabled', true);
             status.text(woobotAdmin.strings.registering).removeClass('success error');
 
+            // Save server URL first, then register
             $.post(woobotAdmin.ajaxUrl, {
-                action: 'woobot_register_store',
+                action: 'woobot_save_settings',
                 nonce: woobotAdmin.nonce,
-                partner_id: partnerId
-            }, function(res) {
-                btn.prop('disabled', false);
-                if (res.success) {
-                    status.text(woobotAdmin.strings.registerSuccess).addClass('success');
-                    // Reload page to show new credentials
-                    setTimeout(function() { location.reload(); }, 1500);
-                } else {
-                    status.text(res.data || woobotAdmin.strings.registerFailed).addClass('error');
-                }
-            }).fail(function() {
-                btn.prop('disabled', false);
-                status.text(woobotAdmin.strings.registerFailed).addClass('error');
+                server_url: serverUrl
+            }, function() {
+                $.post(woobotAdmin.ajaxUrl, {
+                    action: 'woobot_register_store',
+                    nonce: woobotAdmin.nonce,
+                    key: key,
+                    server_url: serverUrl
+                }, function(res) {
+                    btn.prop('disabled', false);
+                    if (res.success) {
+                        status.text(woobotAdmin.strings.registerSuccess).addClass('success');
+                        setTimeout(function() { location.reload(); }, 1500);
+                    } else {
+                        status.text(res.data || woobotAdmin.strings.registerFailed).addClass('error');
+                    }
+                }).fail(function() {
+                    btn.prop('disabled', false);
+                    status.text(woobotAdmin.strings.registerFailed).addClass('error');
+                });
             });
         });
 
